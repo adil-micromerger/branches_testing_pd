@@ -6,33 +6,35 @@ on:
       - dev
 
 jobs:
-  firebase_app:
-    name: Run Firebase Workflow
-    runs-on: ubuntu-latest ## virtual machine
+  build_and_deploy:
+    name: Build and Deploy
+    runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: "12.x"
 
-      - name: Decode google-services.json
-        env:
-          GOOGLE_SERVICES_JSON: ${{secrets.JSON}}
-        run: echo "$GOOGLE_SERVICES_JSON" > android/app/google-services.json
-
-      - uses: subosito/flutter-action@v1
+      - uses: actions/setup-java@v3
         with:
-          channel: "stable"
+          distribution: 'temurin'
+          java-version: '12'
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '2.x'
+          channel: 'beta'
+
       - run: flutter pub get
-      - run: flutter build apk
-      - uses: actions/upload-artifact@v1
+      - run: flutter build apk --release
+
+      - uses: actions/upload-artifact@v2
         with:
-          name: release-apk
-          path: build/app/outputs/apk/release/app-release.apk
-      - name: Upload to Firebase App Distribution
-        uses: wzieba/Firebase-Distribution-Github-Action@v1
+          name: apk-build
+          path: build/app/outputs/flutter-apk
+
+      - name: Deploy
+        uses: wzieba/Firebase-Distribution-Github-Action@v1.5.0
         with:
-          appId: ${{secrets.APP_ID}}
-          token: ${{secrets.APP_TOKEN}}
-          groups: testers
+          appId: ${{ secrets.APP_ID }}
+          token: ${{ secrets.APP_TOKEN }}
+          release_notes: "a new version"
           file: build/app/outputs/flutter-apk/app-release.apk
