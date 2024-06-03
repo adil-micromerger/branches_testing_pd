@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "504178179550",
+    "firebase_url": "https://counter-realtime-eac96-default-rtdb.firebaseio.com",
+    "project_id": "counter-realtime-eac96",
+    "storage_bucket": "counter-realtime-eac96.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504178179550:android:2e5c95529ffb34d048714f",
+        "android_client_info": {
+          "package_name": "com.example.branches_testing_pd"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa7VDLiGihqkI1cJlfR2nKno2A9rsuO50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:504178179550:android:8950ed25edb552ff48714f",
+        "android_client_info": {
+          "package_name": "com.example.counter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa7VDLiGihqkI1cJlfR2nKno2A9rsuO50"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
