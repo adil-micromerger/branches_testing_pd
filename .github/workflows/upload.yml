@@ -7,24 +7,21 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
-
+    name: Run Firebase Workflow
+    runs-on: ubuntu-latest ## virtual machine
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Set up JDK
-        uses: actions/setup-java@v2
+      - uses: actions/checkout@v2
+      - uses: actions/setup-java@v1
         with:
-          java-version: '11'
+          java-version: "12.x"
 
       - name: Build release bundle
         run: ./gradlew bundleRelease
 
-      - name: Upload AAB to Google Play
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
-          packageName: your.package.name
-          track: production
-          bundleFile: app/build/outputs/bundle/release/app.aab
+#      - name: Upload AAB to Google Play
+#        uses: r0adkll/upload-google-play@v1
+#        with:
+#          serviceAccountJsonPlainText: ${{ secrets.GOOGLE_PLAY_SERVICE_ACCOUNT }}
+#          packageName: your.package.name
+#          track: production
+#          bundleFile: app/build/outputs/bundle/release/app.aab
