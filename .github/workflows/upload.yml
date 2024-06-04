@@ -6,7 +6,7 @@ on:
       - dev
 
 jobs:
-  build:
+  firebase_app:
     name: Run Firebase Workflow
     runs-on: ubuntu-latest ## virtual machine
     steps:
@@ -15,8 +15,15 @@ jobs:
         with:
           java-version: "12.x"
 
-      - name: Build release bundle
-        run: ./gradlew bundleRelease
+      - uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+      - run: flutter pub get
+      - run: ./gradlew bundleRelease
+      - uses: actions/upload-artifact@v1
+        with:
+          name: release-apk
+          path: app/build/outputs/bundle/release/app.aab
 
 #      - name: Upload AAB to Google Play
 #        uses: r0adkll/upload-google-play@v1
