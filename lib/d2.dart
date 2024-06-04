@@ -7,7 +7,7 @@ class D2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("D2"),
+        title: const Text("Dssss2"),
       ),
       body: const Column(
         children: [
