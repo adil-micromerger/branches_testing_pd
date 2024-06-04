@@ -3,27 +3,37 @@ name: Build and Release
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
-  firebase_app:
-    name: Run Firebase Workflow
-    runs-on: ubuntu-latest ## virtual machine
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-java@v1
-        with:
-          java-version: "12.x"
+  build:
+    runs-on: ubuntu-latest
 
-      - uses: subosito/flutter-action@v1
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
         with:
-          channel: "stable"
-      - run: flutter pub get
-      - run: ./gradlew bundleRelease
-      - uses: actions/upload-artifact@v1
+          distribution: 'adopt' # or 'zulu', 'amazon-corretto', 'oracle'
+          java-version: '11'
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
+      - name: Cache Gradle packages
+        uses: actions/cache@v2
         with:
-          name: release-apk
-          path: app/build/outputs/bundle/release/app.aab
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: ${{ runner.os }}-gradle-
+
+      - name: Build release bundle
+        run: ./gradlew bundleRelease
+
 
 #      - name: Upload AAB to Google Play
 #        uses: r0adkll/upload-google-play@v1
