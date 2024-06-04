@@ -7,6 +7,7 @@ on:
 
 jobs:
   build:
+    name: Build Flutter AAB
     runs-on: ubuntu-latest
 
     steps:
@@ -27,8 +28,9 @@ jobs:
       - name: Upload AAB
         uses: actions/upload-artifact@v2
         with:
-          name: app-release.aab
+          name: release-aab
           path: build/app/outputs/bundle/release/app-release.aab
+
 
 
 #      - name: Upload AAB to Google Play
